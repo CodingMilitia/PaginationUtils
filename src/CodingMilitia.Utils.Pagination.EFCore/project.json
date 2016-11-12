@@ -1,8 +1,8 @@
 {
-  "version": "0.0.1-*",
+  "version": "0.0.1-beta",
 
   "dependencies": {
-    "CodingMilitia.Utils.Pagination": "0.0.1-*",
+    "CodingMilitia.Utils.Pagination": "0.0.1-beta*",
     "NETStandard.Library": "1.6.0",
     "Microsoft.EntityFrameworkCore": "1.0.0"
   },
