@@ -10,7 +10,7 @@ namespace CodingMilitia.Utils.Pagination.Tests
         private static readonly int ItemsPerPage = 10;
         private static readonly int TotalItemCount = 50;
         private static readonly int[] Items = { 1, 2, 3, 4, 5 };
-        private static readonly int[] NullItems;
+        private static readonly int[] NullItems = null;
 
         [Fact]
         public void ToPageInstantiatesNewPageWithProvidedValues()

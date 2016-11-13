@@ -18,7 +18,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Tests
         private static readonly DbEntity[] InnerPage = new DbEntity[3];
         private static readonly DbEntity[] LastPage = { new DbEntity { Key = 10 } };
         private static readonly DbEntity[] EmptyPage = { };
-        private static readonly IQueryable<string> NullItems;
+        private static readonly IQueryable<string> NullItems = null;
 
         static PaginateTests()
         {

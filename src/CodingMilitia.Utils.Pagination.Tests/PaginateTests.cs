@@ -12,7 +12,7 @@ namespace CodingMilitia.Utils.Pagination.Tests
         private static readonly int[] InnerPage = { 4, 5, 6 };
         private static readonly int[] LastPage = { 10 };
         private static readonly int[] EmptyPage = { };
-        private static readonly int[] NullItems;
+        private static readonly int[] NullItems = null;
 
         [Fact]
         public void PaginateGetsInitialPage()
