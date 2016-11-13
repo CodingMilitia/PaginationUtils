@@ -10,7 +10,7 @@ namespace CodingMilitia.Utils.Pagination.Tests
         private static readonly int ItemsPerPage = 10;
         private static readonly int TotalItemCount = 50;
         private static readonly int[] Items = { 1, 2, 3, 4, 5 };
-        private static readonly int[] NullItems = null;
+        private static readonly int[] NullItems;
 
         [Fact]
         public void ToPageInstantiatesNewPageWithProvidedValues()
@@ -26,8 +26,23 @@ namespace CodingMilitia.Utils.Pagination.Tests
         [Fact]
         public void ToPageThrowsArgumentNullExceptionOnNullItems()
         {
-            Assert.Throws<ArgumentNullException>(() => NullItems.ToPage(PageNumber, ItemsPerPage, TotalItemCount));
+            Assert.Throws<ArgumentNullException>("items", () => NullItems.ToPage(PageNumber, ItemsPerPage, TotalItemCount));
 
+        }
+        [Fact]
+        public void PageNumberSmallerThanOneThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>("pageNumber", () => Items.ToPage(0, ItemsPerPage, TotalItemCount));
+        }
+        [Fact]
+        public void ItemsPerPageSmallerThanOneThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>("itemsPerPage", () => Items.ToPage(1, 0, TotalItemCount));
+        }
+        [Fact]
+        public void NegativeTotalItemCountThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>("totalItemCount", () => Items.ToPage(1, ItemsPerPage, -1));
         }
     }
 }

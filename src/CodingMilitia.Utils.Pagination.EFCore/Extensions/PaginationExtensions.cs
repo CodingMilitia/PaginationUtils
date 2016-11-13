@@ -22,6 +22,14 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Extensions
             {
                 throw new ArgumentNullException(nameof(items));
             }
+            if (pageNumber < 1)
+            {
+                throw new ArgumentException("Page number must be 1 or greater.", nameof(pageNumber));
+            }
+            if (itemsPerPage < 1)
+            {
+                throw new ArgumentException("Items per page must be 1 or greater.", nameof(itemsPerPage));
+            }
             var totalItemCount = await items.CountAsync(cancellationToken).ConfigureAwait(false);
             var page = await items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToArrayAsync(cancellationToken).ConfigureAwait(false);
             return new Page<T>(pageNumber, itemsPerPage, totalItemCount, page);

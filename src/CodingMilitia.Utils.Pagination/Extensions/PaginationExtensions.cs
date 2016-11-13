@@ -21,6 +21,18 @@ namespace CodingMilitia.Utils.Pagination.Extensions
             {
                 throw new ArgumentNullException(nameof(items));
             }
+            if (pageNumber < 1)
+            {
+                throw new ArgumentException("Page number must be 1 or greater.", nameof(pageNumber));
+            }
+            if (itemsPerPage < 1)
+            {
+                throw new ArgumentException("Items per page must be 1 or greater.", nameof(itemsPerPage));
+            }
+            if (totalItemCount < 0)
+            {
+                throw new ArgumentException("Total item count must be 0 or greater.", nameof(totalItemCount));
+            }
             return new Page<T>(pageNumber, itemsPerPage, totalItemCount, items);
         }
         /// <summary>
@@ -36,6 +48,14 @@ namespace CodingMilitia.Utils.Pagination.Extensions
             if (items == null)
             {
                 throw new ArgumentNullException(nameof(items));
+            }
+            if (pageNumber < 1)
+            {
+                throw new ArgumentException("Page number must be 1 or greater.", nameof(pageNumber));
+            }
+            if (itemsPerPage < 1)
+            {
+                throw new ArgumentException("Items per page must be 1 or greater.", nameof(itemsPerPage));
             }
             var totalItemCount = items.Count();
             var page = items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToArray();

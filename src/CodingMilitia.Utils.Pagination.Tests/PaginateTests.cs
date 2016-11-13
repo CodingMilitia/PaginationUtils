@@ -12,7 +12,7 @@ namespace CodingMilitia.Utils.Pagination.Tests
         private static readonly int[] InnerPage = { 4, 5, 6 };
         private static readonly int[] LastPage = { 10 };
         private static readonly int[] EmptyPage = { };
-        private static readonly int[] NullItems = null;
+        private static readonly int[] NullItems;
 
         [Fact]
         public void PaginateGetsInitialPage()
@@ -65,7 +65,18 @@ namespace CodingMilitia.Utils.Pagination.Tests
         [Fact]
         public void PaginateThrowsArgumentNullExceptionOnNullItems()
         {
-            Assert.Throws<ArgumentNullException>(() => NullItems.Paginate(1, ItemsPerPage));
+            Assert.Throws<ArgumentNullException>("items", () => NullItems.Paginate(1, ItemsPerPage));
+        }
+
+        [Fact]
+        public void PageNumberSmallerThanOneThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>("pageNumber", () => Items.Paginate(0, ItemsPerPage));
+        }
+        [Fact]
+        public void ItemsPerPageSmallerThanOneThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>("itemsPerPage", () => Items.Paginate(1, 0));
         }
     }
 }
