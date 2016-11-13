@@ -9,6 +9,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Paginat
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination.Tests", "CodingMilitia.Utils.Pagination.Tests\CodingMilitia.Utils.Pagination.Tests.xproj", "{613657CE-DB51-4BD5-8E74-28FD45D0851A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination.EFCore.Tests", "CodingMilitia.Utils.Pagination.EFCore.Tests\CodingMilitia.Utils.Pagination.EFCore.Tests.xproj", "{562567AC-F4BD-4065-A3A4-BC6129BDE526}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{613657CE-DB51-4BD5-8E74-28FD45D0851A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{613657CE-DB51-4BD5-8E74-28FD45D0851A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{613657CE-DB51-4BD5-8E74-28FD45D0851A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562567AC-F4BD-4065-A3A4-BC6129BDE526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562567AC-F4BD-4065-A3A4-BC6129BDE526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562567AC-F4BD-4065-A3A4-BC6129BDE526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562567AC-F4BD-4065-A3A4-BC6129BDE526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
