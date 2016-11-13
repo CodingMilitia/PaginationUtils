@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "buildOptions": {
     "debugType": "portable"
   },
@@ -8,7 +8,7 @@
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "xunit.runner.console": "2.2.0-beta4-build3444",
-    "CodingMilitia.Utils.Pagination.EFCore": "0.0.1-beta",
+    "CodingMilitia.Utils.Pagination.EFCore": "0.0.2-beta",
     "Moq": "4.6.38-alpha",
     "Microsoft.EntityFrameworkCore": "1.0.1",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.1"
