@@ -1,10 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.0.0-dev003</VersionPrefix>
+    <VersionPrefix>1.0.0-rc.1</VersionPrefix>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>CodingMilitia.Utils.Pagination</AssemblyName>
     <PackageId>CodingMilitia.Utils.Pagination</PackageId>
+    <Description>Helper classes and methods to work with pagination.</Description>
+    <Authors>João Antunes</Authors>
+    <PackageTags>pagination;utils</PackageTags>
+    <PackageProjectUrl>https://github.com/CodingMilitia/PaginationUtils</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/CodingMilitia/PaginationUtils</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
