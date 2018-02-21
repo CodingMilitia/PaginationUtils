@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CodingMilitia.Utils.Pagination.EFCore.Extensions
+namespace CodingMilitia.Utils.Pagination
 {
     public static class PaginationExtensions
     {
@@ -31,7 +31,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Extensions
                 throw new ArgumentException("Items per page must be 1 or greater.", nameof(itemsPerPage));
             }
             var totalItemCount = await items.CountAsync(cancellationToken).ConfigureAwait(false);
-            var page = await items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToArrayAsync(cancellationToken).ConfigureAwait(false);
+            var page = await items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToListAsync(cancellationToken).ConfigureAwait(false);
             return new Page<T>(pageNumber, itemsPerPage, totalItemCount, page);
         }
 

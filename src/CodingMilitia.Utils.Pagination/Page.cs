@@ -10,20 +10,25 @@ namespace CodingMilitia.Utils.Pagination
         public int ItemCount { get; private set; }
         public int ItemsPerPage { get; private set; }
         public int TotalItemCount { get; private set; }
-        private T[] _items;
 
-        public Page(int number, int itemsPerPage, int totalCount, IEnumerable<T> items)
+        private readonly IReadOnlyCollection<T> _items;
+
+        public Page(int number, int itemsPerPage, int totalCount, IReadOnlyCollection<T> items)
         {
             Number = number;
-            ItemCount = items.Count();
+            ItemCount = items.Count;
             ItemsPerPage = itemsPerPage;
             TotalItemCount = totalCount;
-            _items = items.ToArray();
+            _items = items;
         }
+
+        public Page(int number, int itemsPerPage, int totalCount, IEnumerable<T> items) 
+            : this(number, itemsPerPage, totalCount, items.ToList())
+        { }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return ((IEnumerable<T>)_items).GetEnumerator();
+            return _items.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

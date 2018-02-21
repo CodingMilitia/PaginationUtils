@@ -2,8 +2,8 @@
 {
     public struct PaginationParameter
     {
-        public int PageNumber { get; set; }
-        public int ItemsPerPage { get; set; }
+        public int PageNumber { get; private set; }
+        public int ItemsPerPage { get; private set; }
 
         public PaginationParameter(int page, int itemsPerPage)
             : this()

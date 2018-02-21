@@ -1,7 +1,4 @@
-﻿using CodingMilitia.Utils.Pagination.EFCore.Extensions;
-using CodingMilitia.Utils.Pagination.EFCore.Tests;
-using CodingMilitia.Utils.Pagination.EFCore.Tests.Mocks;
-using Microsoft.EntityFrameworkCore;
+﻿using CodingMilitia.Utils.Pagination.EFCore.Tests.Mocks;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,7 +45,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Tests
             Assert.Equal(pageNumber, page.Number);
             Assert.Equal(ItemsPerPage, page.ItemsPerPage);
             Assert.Equal(InitalPage.Length, page.ItemCount);
-            Assert.Equal(Items.Count(), page.TotalItemCount);
+            Assert.Equal(Items.Length, page.TotalItemCount);
             Assert.Equal(InitalPage, page);
         }
 
@@ -61,7 +58,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Tests
             Assert.Equal(pageNumber, page.Number);
             Assert.Equal(ItemsPerPage, page.ItemsPerPage);
             Assert.Equal(InnerPage.Length, page.ItemCount);
-            Assert.Equal(Items.Count(), page.TotalItemCount);
+            Assert.Equal(Items.Length, page.TotalItemCount);
             Assert.Equal(InnerPage, page);
         }
 
@@ -74,7 +71,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Tests
             Assert.Equal(pageNumber, page.Number);
             Assert.Equal(ItemsPerPage, page.ItemsPerPage);
             Assert.Equal(LastPage.Length, page.ItemCount);
-            Assert.Equal(Items.Count(), page.TotalItemCount);
+            Assert.Equal(Items.Length, page.TotalItemCount);
             Assert.Equal(LastPage, page);
         }
 
@@ -87,7 +84,7 @@ namespace CodingMilitia.Utils.Pagination.EFCore.Tests
             Assert.Equal(pageNumber, page.Number);
             Assert.Equal(ItemsPerPage, page.ItemsPerPage);
             Assert.Equal(EmptyPage.Length, page.ItemCount);
-            Assert.Equal(Items.Count(), page.TotalItemCount);
+            Assert.Equal(Items.Length, page.TotalItemCount);
             Assert.Equal(EmptyPage, page);
         }
 

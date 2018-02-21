@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodingMilitia.Utils.Pagination.Extensions
+namespace CodingMilitia.Utils.Pagination
 {
     public static class PaginationExtensions
     {
@@ -58,7 +58,7 @@ namespace CodingMilitia.Utils.Pagination.Extensions
                 throw new ArgumentException("Items per page must be 1 or greater.", nameof(itemsPerPage));
             }
             var totalItemCount = items.Count();
-            var page = items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToArray();
+            var page = items.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToList();
             return new Page<T>(pageNumber, itemsPerPage, totalItemCount, page);
         }
 

@@ -1,5 +1,4 @@
-﻿using CodingMilitia.Utils.Pagination.Extensions;
-using System;
+﻿using System;
 using Xunit;
 
 namespace CodingMilitia.Utils.Pagination.Tests
