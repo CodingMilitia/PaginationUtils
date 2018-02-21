@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination", "CodingMilitia.Utils.Pagination\CodingMilitia.Utils.Pagination.xproj", "{ABF39933-08AF-4684-AB3F-AFDB8E2CA141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingMilitia.Utils.Pagination", "src\CodingMilitia.Utils.Pagination\CodingMilitia.Utils.Pagination.csproj", "{ABF39933-08AF-4684-AB3F-AFDB8E2CA141}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination.EFCore", "CodingMilitia.Utils.Pagination.EFCore\CodingMilitia.Utils.Pagination.EFCore.xproj", "{55B8B0BF-EFC5-4BCA-895D-E9F3BB93088C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingMilitia.Utils.Pagination.EFCore", "src\CodingMilitia.Utils.Pagination.EFCore\CodingMilitia.Utils.Pagination.EFCore.csproj", "{55B8B0BF-EFC5-4BCA-895D-E9F3BB93088C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination.Tests", "CodingMilitia.Utils.Pagination.Tests\CodingMilitia.Utils.Pagination.Tests.xproj", "{613657CE-DB51-4BD5-8E74-28FD45D0851A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingMilitia.Utils.Pagination.Tests", "tests\CodingMilitia.Utils.Pagination.Tests\CodingMilitia.Utils.Pagination.Tests.csproj", "{613657CE-DB51-4BD5-8E74-28FD45D0851A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodingMilitia.Utils.Pagination.EFCore.Tests", "CodingMilitia.Utils.Pagination.EFCore.Tests\CodingMilitia.Utils.Pagination.EFCore.Tests.xproj", "{562567AC-F4BD-4065-A3A4-BC6129BDE526}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingMilitia.Utils.Pagination.EFCore.Tests", "tests\CodingMilitia.Utils.Pagination.EFCore.Tests\CodingMilitia.Utils.Pagination.EFCore.Tests.csproj", "{562567AC-F4BD-4065-A3A4-BC6129BDE526}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8C790BDC-F0C5-47BA-A080-F8F7ACF570D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{53D85147-FE1C-47C2-A549-5D804CA3A73B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +40,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ABF39933-08AF-4684-AB3F-AFDB8E2CA141} = {8C790BDC-F0C5-47BA-A080-F8F7ACF570D7}
+		{55B8B0BF-EFC5-4BCA-895D-E9F3BB93088C} = {8C790BDC-F0C5-47BA-A080-F8F7ACF570D7}
+		{613657CE-DB51-4BD5-8E74-28FD45D0851A} = {53D85147-FE1C-47C2-A549-5D804CA3A73B}
+		{562567AC-F4BD-4065-A3A4-BC6129BDE526} = {53D85147-FE1C-47C2-A549-5D804CA3A73B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B75E7EA2-873C-4860-A4AE-6039AA0BEC49}
 	EndGlobalSection
 EndGlobal

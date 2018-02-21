@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-dev003</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>CodingMilitia.Utils.Pagination</AssemblyName>
+    <PackageId>CodingMilitia.Utils.Pagination</PackageId>
+  </PropertyGroup>
+
+</Project>
