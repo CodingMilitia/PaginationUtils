@@ -76,6 +76,9 @@ Task("PackageMaster")
         {
             OutputDirectory = artifactsDir,
             NoBuild = true,
+            IncludeSymbols = true,
+            IncludeSource = true,
+            ArgumentCustomization = args=>args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg")
         };
         DotNetCorePack(solutionPath, settings);
     });
@@ -86,6 +89,9 @@ Task("PackageDevelop")
         {
             OutputDirectory = artifactsDir,
             NoBuild = true,
+            IncludeSymbols = true,
+            IncludeSource = true,
+            ArgumentCustomization = args=>args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg"),
             VersionSuffix = DateTime.UtcNow.ToString("yyyyMMddhhmmss")
         };
         DotNetCorePack(solutionPath, settings);
@@ -199,7 +205,7 @@ private void PublishToNugetSource(string source, string apiKey)
         ApiKey = apiKey
     };
 
-    var pkgs = GetFiles(artifactsDir + "*.nupkg");
+    var pkgs = GetFiles(artifactsDir + "*.*nupkg");
     foreach(var pkg in pkgs) 
     {
         if(!IsNuGetPublished(pkg)) 
@@ -232,7 +238,7 @@ private void PublishToAzureArtifacts(string source)
             Password = azureAccessToken
         });
 
-    var pkgs = GetFiles(artifactsDir + "*.nupkg");
+    var pkgs = GetFiles(artifactsDir + "*.*nupkg");
     foreach(var pkg in pkgs) 
     {
         Information($"Publishing \"{pkg}\".");
