@@ -78,6 +78,8 @@ Task("PackageMaster")
             NoBuild = true,
             IncludeSymbols = true,
             IncludeSource = true,
+            // only needed while there isn't out of the box support to package in this format
+            ArgumentCustomization = args=>args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg")
         };
         DotNetCorePack(solutionPath, settings);
     });
@@ -90,6 +92,8 @@ Task("PackageDevelop")
             NoBuild = true,
             IncludeSymbols = true,
             IncludeSource = true,
+            // only needed while there isn't out of the box support to package in this format
+            ArgumentCustomization = args=>args.Append("--include-symbols").Append("-p:SymbolPackageFormat=snupkg"),
             VersionSuffix = DateTime.UtcNow.ToString("yyyyMMddhhmmss")
         };
         DotNetCorePack(solutionPath, settings);
@@ -112,7 +116,7 @@ Task("PublishMaster")
 Task("PublishDevelop")
     .IsDependentOn("PackageDevelop")
     .Does(() => {
-        if(releaseToAzureArtifacts)
+        if(developToAzureArtifacts)
         {
             PublishToAzureArtifacts(developNugetSource);
         }
@@ -239,6 +243,7 @@ private void PublishToAzureArtifacts(string source)
     var pkgs = GetFiles(artifactsDir + "*.nupkg");
     foreach(var pkg in pkgs) 
     {
+        Information($"Publishing \"{pkg}\".");
         NuGetPush(pkg, new NuGetPushSettings 
         {
             Source = "VSTS",
