@@ -112,7 +112,7 @@ Task("PublishMaster")
 Task("PublishDevelop")
     .IsDependentOn("PackageDevelop")
     .Does(() => {
-        if(releaseToAzureArtifacts)
+        if(developToAzureArtifacts)
         {
             PublishToAzureArtifacts(developNugetSource);
         }
