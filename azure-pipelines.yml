@@ -3,8 +3,7 @@ trigger:
 - develop
 
 variables:
-  CURRENT_BRANCH: $(Build.SourceBranchName)
-  NUGET_API_KEY: $(NugetApiKey)
+  CURRENT_BRANCH: $(Build.SourceBranchName)  
 
 jobs:
 - job: Linux
@@ -24,3 +23,4 @@ jobs:
   - powershell: .\build.ps1 --currentBranch=$env:CURRENT_BRANCH --azureAccessToken=$env:SYSTEM_ACCESSTOKEN --developToAzureArtifacts="true" --releaseNugetApiKey=$env:NUGET_API_KEY
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      NUGET_API_KEY: $(NugetApiKey)
