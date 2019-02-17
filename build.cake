@@ -239,6 +239,7 @@ private void PublishToAzureArtifacts(string source)
     var pkgs = GetFiles(artifactsDir + "*.nupkg");
     foreach(var pkg in pkgs) 
     {
+        Information($"Publishing \"{pkg}\".");
         NuGetPush(pkg, new NuGetPushSettings 
         {
             Source = "VSTS",
