@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>1.0.0-rc01</VersionPrefix>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>netstandard1.6;netstandard2.0</TargetFrameworks>
     <AssemblyName>CodingMilitia.Utils.Pagination</AssemblyName>
     <PackageId>CodingMilitia.Utils.Pagination</PackageId>
     <Description>Helper classes and methods to work with pagination.</Description>
