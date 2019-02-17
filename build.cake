@@ -76,7 +76,6 @@ Task("PackageMaster")
         {
             OutputDirectory = artifactsDir,
             NoBuild = true,
-            IncludeSymbols = true,
             IncludeSource = true,
         };
         DotNetCorePack(solutionPath, settings);
@@ -88,7 +87,6 @@ Task("PackageDevelop")
         {
             OutputDirectory = artifactsDir,
             NoBuild = true,
-            IncludeSymbols = true,
             IncludeSource = true,
             VersionSuffix = DateTime.UtcNow.ToString("yyyyMMddhhmmss")
         };
