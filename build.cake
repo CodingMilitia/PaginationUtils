@@ -4,6 +4,7 @@
 using NuGet;
 
 
+
 //////////////////////////////////////////////////////
 //      CONSTANTS AND ENVIRONMENT VARIABLES         //
 //////////////////////////////////////////////////////
@@ -176,18 +177,21 @@ RunTarget(target);
 //                      HELPERS                     //
 //////////////////////////////////////////////////////
 
-private bool IsNuGetPublished(FilePath packagePath) {
+private bool IsNuGetPublished(string source, FilePath packagePath) {
     var package = new ZipPackage(packagePath.FullPath);
 
     var latestPublishedVersions = NuGetList(
         package.Id,
         new NuGetListSettings 
         {
-            Prerelease = true
+            Prerelease = true,
+            Source = new []{ source }
         }
     );
 
-    return latestPublishedVersions.Any(p => package.Version.Equals(new SemanticVersion(p.Version)));
+    return latestPublishedVersions
+        .Where(p => !string.Equals("no packages", $"{p.Name} {p.Version}", StringComparison.OrdinalIgnoreCase))
+        .Any(p => package.Version.Equals(new SemanticVersion(p.Version)));
 }
 
 private void PublishToNugetSource(string source, string apiKey)
@@ -210,7 +214,7 @@ private void PublishToNugetSource(string source, string apiKey)
     var pkgs = GetFiles(artifactsDir + "*.nupkg");
     foreach(var pkg in pkgs) 
     {
-        if(!IsNuGetPublished(pkg)) 
+        if(!IsNuGetPublished(source, pkg)) 
         {
             Information($"Publishing \"{pkg}\".");
             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
@@ -243,11 +247,18 @@ private void PublishToAzureArtifacts(string source)
     var pkgs = GetFiles(artifactsDir + "*.nupkg");
     foreach(var pkg in pkgs) 
     {
-        Information($"Publishing \"{pkg}\".");
-        NuGetPush(pkg, new NuGetPushSettings 
+        if(!IsNuGetPublished(source, pkg)) 
         {
-            Source = "VSTS",
-            ApiKey = "VSTS"
-        });
+            Information($"Publishing \"{pkg}\".");
+            NuGetPush(pkg, new NuGetPushSettings 
+            {
+                Source = "VSTS",
+                ApiKey = "VSTS"
+            });
+        }
+        else 
+        {
+            Information($"Bypassing publishing \"{pkg}\" as it is already published.");
+        }
     }
 }
