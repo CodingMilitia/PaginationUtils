@@ -1,0 +1,27 @@
+trigger:
+- master
+- develop
+
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - bash: ./build.sh --target "BuildAndTest" --currentBranch=$CURRENT_BRANCH
+    env:
+      CURRENT_BRANCH: $(Build.SourceBranchName)
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - bash: ./build.sh --target "BuildAndTest" --currentBranch=$CURRENT_BRANCH
+    env:
+      CURRENT_BRANCH: $(Build.SourceBranchName)
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - powershell: .\build.ps1 -Target "Complete" -CurrentBranch=$env:CURRENT_BRANCH -AzureAccessToken=$env:SYSTEM_ACCESSTOKEN -DevelopToAzureArtifacts="true" -ReleaseNugetApiKey=$env:NUGET_API_KEY
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      CURRENT_BRANCH: $(Build.SourceBranchName)
