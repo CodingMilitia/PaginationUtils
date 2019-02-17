@@ -21,7 +21,7 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - powershell: .\build.ps1 -Target "Complete" -CurrentBranch=$env:CURRENT_BRANCH -AzureAccessToken=$env:SYSTEM_ACCESSTOKEN -DevelopToAzureArtifacts="true" -ReleaseNugetApiKey=$env:NUGET_API_KEY
+  - powershell: .\build.ps1 --currentBranch=$env:CURRENT_BRANCH --azureAccessToken=$env:SYSTEM_ACCESSTOKEN --developToAzureArtifacts="true" --releaseNugetApiKey=$env:NUGET_API_KEY
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
       CURRENT_BRANCH: $(Build.SourceBranchName)
