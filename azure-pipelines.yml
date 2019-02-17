@@ -4,6 +4,7 @@ trigger:
 
 variables:
   CURRENT_BRANCH: $(Build.SourceBranchName)
+  NUGET_API_KEY: $(NugetApiKey)
 
 jobs:
 - job: Linux
