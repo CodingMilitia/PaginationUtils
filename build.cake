@@ -1,7 +1,5 @@
-#tool "nuget:?package=coveralls.io&version=1.4.2"
 #addin Cake.Git
 #addin nuget:?package=Nuget.Core
-#addin "nuget:?package=Cake.Coveralls&version=0.9.0"
 
 using NuGet;
 
@@ -17,10 +15,17 @@ var currentBranch = Argument<string>("currentBranch", GitBranchCurrent("./").Fri
 var isReleaseBuild = string.Equals(currentBranch, "master", StringComparison.OrdinalIgnoreCase);
 var isDevelopBuild = string.Equals(currentBranch, "develop", StringComparison.OrdinalIgnoreCase);
 var configuration = "Release";
-var publicNugetApiKey = Argument<string>("publicNugetApiKey", null);
-var privateNugetApiKey = Argument<string>("privateNugetApiKey", null);
-var publicNugetSource = "https://api.nuget.org/v3/index.json";
-var privateNugetSource = "https://pkgs.dev.azure.com/CodingMilitiaOrg/_packaging/CodingMilitia/nuget/v3/index.json";
+
+var releaseNugetSource = Argument<string>("releaseNugetSource", "https://api.nuget.org/v3/index.json");
+var releaseNugetApiKey = Argument<string>("releaseNugetApiKey", null);
+
+var developNugetSource = Argument<string>("developNugetSource", "https://pkgs.dev.azure.com/CodingMilitiaOrg/_packaging/CodingMilitia/nuget/v3/index.json");
+var developNugetApiKey = Argument<string>("developNugetApiKey", null);
+
+var releaseToAzureArtifacts = Argument<bool>("releaseToAzureArtifacts", false);
+var developToAzureArtifacts = Argument<bool>("developToAzureArtifacts", false);
+
+var azureAccessToken = Argument<string>("azureAccessToken", null);
 
 //////////////////////////////////////////////////////
 //                     TASKS                        //
@@ -65,7 +70,7 @@ Task("Test")
         DotNetCoreTest(solutionPath);
     });
 
-Task("PackagePublic")
+Task("PackageMaster")
     .Does(() => {
         var settings = new DotNetCorePackSettings
         {
@@ -77,7 +82,7 @@ Task("PackagePublic")
         DotNetCorePack(solutionPath, settings);
     });
 
-Task("PackagePrivate")
+Task("PackageDevelop")
     .Does(() => {
         var settings = new DotNetCorePackSettings
         {
@@ -90,17 +95,33 @@ Task("PackagePrivate")
         DotNetCorePack(solutionPath, settings);
     });
 
-Task("PublishPublic")
-    .IsDependentOn("PackagePublic")
+Task("PublishMaster")
+    .IsDependentOn("PackageMaster")
     .Does(() => {
-        PublishToNuget(publicNugetSource, publicNugetApiKey);
+        if(releaseToAzureArtifacts)
+        {
+            PublishToAzureArtifacts(releaseNugetSource);
+        }
+        else
+        {
+            PublishToNugetSource(releaseNugetSource, releaseNugetApiKey);
+        }
+        
     });
 
-Task("PublishPrivate")
-    .IsDependentOn("PackagePrivate")
+Task("PublishDevelop")
+    .IsDependentOn("PackageDevelop")
     .Does(() => {
-        PublishToNuget(privateNugetSource, privateNugetApiKey);
+        if(releaseToAzureArtifacts)
+        {
+            PublishToAzureArtifacts(developNugetSource);
+        }
+        else
+        {
+            PublishToNugetSource(developNugetSource, developNugetApiKey);
+        }        
     });
+
 
 //////////////////////////////////////////////////////
 //                     TARGETS                      //
@@ -121,7 +142,7 @@ if(isReleaseBuild)
     Task("Complete")
         .IsDependentOn("Build")
         .IsDependentOn("Test")
-        .IsDependentOn("PublishPublic");
+        .IsDependentOn("PublishMaster");
 }
 else if (isDevelopBuild) 
 {
@@ -130,11 +151,11 @@ else if (isDevelopBuild)
     Task("Complete")
         .IsDependentOn("Build")
         .IsDependentOn("Test")
-        .IsDependentOn("PublishPrivate");
+        .IsDependentOn("PublishDevelop");
 }
 else
 {
-    Information("Development build");
+    Information("Non-publishable build");
     Task("Complete")
         .IsDependentOn("Build")
         .IsDependentOn("Test");
@@ -165,7 +186,7 @@ private bool IsNuGetPublished(FilePath packagePath) {
     return latestPublishedVersions.Any(p => package.Version.Equals(new SemanticVersion(p.Version)));
 }
 
-private void PublishToNuget(string source, string apiKey)
+private void PublishToNugetSource(string source, string apiKey)
 {
     if(string.IsNullOrWhiteSpace(source))
     {
@@ -190,9 +211,38 @@ private void PublishToNuget(string source, string apiKey)
             Information($"Publishing \"{pkg}\".");
             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
         }
-        else {
+        else 
+        {
             Information($"Bypassing publishing \"{pkg}\" as it is already published.");
         }
         
+    }
+}
+
+private void PublishToAzureArtifacts(string source)
+{
+    if (string.IsNullOrEmpty(azureAccessToken))
+    {
+        throw new InvalidOperationException("Could not resolve azureAccessToken");
+    }
+
+    // Add the authenticated feed source
+    NuGetAddSource(
+        "VSTS",
+        source,
+        new NuGetSourcesSettings
+        {
+            UserName = "VSTS",
+            Password = azureAccessToken
+        });
+
+    var pkgs = GetFiles(artifactsDir + "*.nupkg");
+    foreach(var pkg in pkgs) 
+    {
+        NuGetPush(pkg, new NuGetPushSettings 
+        {
+            Source = "VSTS",
+            ApiKey = "VSTS"
+        });
     }
 }
