@@ -160,10 +160,16 @@ else if (isDevelopBuild)
 }
 else
 {
-    Information("Non-publishable build");
+    Information("Debugging build - Will try to publish artifacts to private NuGet feed");
+
     Task("Complete")
         .IsDependentOn("Build")
-        .IsDependentOn("Test");
+        .IsDependentOn("Test")
+        .IsDependentOn("PublishDevelop");
+    // Information("Non-publishable build");
+    // Task("Complete")
+    //     .IsDependentOn("Build")
+    //     .IsDependentOn("Test");
 }
 
 Task("Default")
@@ -188,6 +194,11 @@ private bool IsNuGetPublished(string source, FilePath packagePath) {
             Source = new []{ source }
         }
     );
+
+    foreach(var p in latestPublishedVersions)
+    {
+        Information($"{p.Name} {p.Version}");
+    }
 
     return latestPublishedVersions
         .Where(p => !string.Equals("no packages", $"{p.Name} {p.Version}", StringComparison.OrdinalIgnoreCase))
