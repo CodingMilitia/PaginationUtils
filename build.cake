@@ -189,9 +189,9 @@ private bool IsNuGetPublished(string source, FilePath packagePath) {
         }
     );
 
+    // this version parsing isn't the prettiest thing, but considering the weird versions returned, it's the best I can think of right now
     return latestPublishedVersions
-        .Where(p => !string.Equals("no packages", $"{p.Name} {p.Version}", StringComparison.OrdinalIgnoreCase))
-        .Any(p => package.Version.Equals(new SemanticVersion(p.Version)));
+        .Any(p =>  SemanticVersion.TryParse(p.Version, out var semVer) && package.Version.Equals(semVer));
 }
 
 private void PublishToNugetSource(string source, string apiKey)
