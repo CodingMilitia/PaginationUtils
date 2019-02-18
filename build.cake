@@ -160,16 +160,10 @@ else if (isDevelopBuild)
 }
 else
 {
-    Information("Debugging build - Will try to publish artifacts to private NuGet feed");
-
+    Information("Non-publishable build");
     Task("Complete")
         .IsDependentOn("Build")
-        .IsDependentOn("Test")
-        .IsDependentOn("PublishDevelop");
-    // Information("Non-publishable build");
-    // Task("Complete")
-    //     .IsDependentOn("Build")
-    //     .IsDependentOn("Test");
+        .IsDependentOn("Test");
 }
 
 Task("Default")
@@ -195,11 +189,7 @@ private bool IsNuGetPublished(string source, FilePath packagePath) {
         }
     );
 
-    foreach(var p in latestPublishedVersions)
-    {
-        Information($"{p.Name} {p.Version}");
-    }
-
+    // this version parsing isn't the prettiest thing, but considering the weird versions returned, it's the best I can think of right now
     return latestPublishedVersions
         .Any(p =>  SemanticVersion.TryParse(p.Version, out var semVer) && package.Version.Equals(semVer));
 }
