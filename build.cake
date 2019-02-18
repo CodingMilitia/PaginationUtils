@@ -201,8 +201,7 @@ private bool IsNuGetPublished(string source, FilePath packagePath) {
     }
 
     return latestPublishedVersions
-        .Where(p => !string.Equals("no packages", $"{p.Name} {p.Version}", StringComparison.OrdinalIgnoreCase))
-        .Any(p => package.Version.Equals(new SemanticVersion(p.Version)));
+        .Any(p =>  SemanticVersion.TryParse(p.Version, out var semVer) && package.Version.Equals(semVer));
 }
 
 private void PublishToNugetSource(string source, string apiKey)
